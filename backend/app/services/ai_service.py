@@ -1,8 +1,15 @@
 import random
+from ai_modules.cv.face_mesh import FaceAnalyzer
+
+analyzer = FaceAnalyzer()
 
 def analyze_emotion(frame_bytes):
-    emotions = ["Neutral", "Happy", "Stressed", "Fearful", "Surprised"]
-    # In a real app, this would use mediapipe or opencv
+    analysis = analyzer.analyze_frame(frame_bytes)
+    # Simple logic mapping: no face -> stressed (out of focus)
+    if not analysis.get("face_detected", False):
+        return "Not Focused"
+    
+    emotions = ["Neutral", "Happy", "Focused"]
     return random.choice(emotions)
 
 def calculate_relevance(text):

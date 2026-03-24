@@ -23,9 +23,12 @@ A comprehensive AI-driven interview platform designed to automate and enhance th
 2. Install dependencies: `npm install`
 3. Start the development server: `npm run dev`
 
-## Phase 1 Deliverables
-- [x] Backend Core (FastAPI)
+## Phase 1-5 Deliverables
+- [x] Backend Core (FastAPI) & Database (SQLite/SQLAlchemy)
 - [x] Frontend Boilerplate (React + Tailwind)
-- [x] Candidate Session Flow
-- [x] Mock AI Service Integration
-- [x] Initial Question Bank
+- [x] Candidate Session Flow & Persistence
+- [x] Real-time Face Tracking (MediaPipe) & Low-Focus Alerts
+- [x] WebSocket Communication for CV Frames
+- [x] NLP Answer Relevance Scoring (Logic Layer)
+- [x] Automated PDF Report Generation (fpdf2)
+- [x] Admin Session Analytics Endpoint

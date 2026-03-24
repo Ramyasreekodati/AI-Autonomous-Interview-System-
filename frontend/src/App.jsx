@@ -11,6 +11,42 @@ function App() {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [analysis, setAnalysis] = useState({ emotion: 'Neutral', focus: 100 });
   const videoRef = useRef(null);
+  const canvasRef = useRef(null);
+  const wsRef = useRef(null);
+
+  useEffect(() => {
+    if (session && !wsRef.current) {
+      const ws = new WebSocket(`ws://localhost:8000/ws/analyze/${session.session_id}`);
+      ws.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        setAnalysis({ emotion: data.emotion, focus: data.focus_score * 100 });
+      };
+      wsRef.current = ws;
+
+      const interval = setInterval(() => {
+        captureFrame();
+      }, 500); // Send frame every 500ms
+
+      return () => {
+        clearInterval(interval);
+        ws.close();
+      };
+    }
+  }, [session]);
+
+  const captureFrame = () => {
+    if (videoRef.current && wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+      const canvas = canvasRef.current;
+      const video = videoRef.current;
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      canvas.toBlob((blob) => {
+        if (blob) wsRef.current.send(blob);
+      }, 'image/jpeg', 0.5);
+    }
+  };
 
   const startSession = async () => {
     try {
@@ -35,11 +71,33 @@ function App() {
     }
   };
 
-  const nextQuestion = () => {
-    if (currentIdx < questions.length - 1) {
-      setCurrentIdx(currentIdx + 1);
-    } else {
-      alert("Interview complete!");
+  const nextQuestion = async () => {
+    try {
+      // Analyze current answer (simulation of speech-to-text here)
+      const formData = new FormData();
+      formData.append('session_id', session.session_id);
+      formData.append('question_id', questions[currentIdx].id);
+      formData.append('text', "The candidate explained the concepts clearly."); // Mock speech text
+      await axios.post(`${API_BASE}/analyze/speech`, formData);
+
+      if (currentIdx < questions.length - 1) {
+        setCurrentIdx(currentIdx + 1);
+      } else {
+        finishInterview();
+      }
+    } catch (err) {
+      console.error("Failed to submit answer", err);
+    }
+  };
+
+  const finishInterview = async () => {
+    try {
+      const res = await axios.get(`${API_BASE}/report/${session.session_id}`);
+      alert("Interview Complete! Your report is being generated.");
+      window.open(`${API_BASE}${res.data.report_url}`, '_blank');
+      setSession(null);
+    } catch (err) {
+      console.error("Failed to finish interview", err);
     }
   };
 
@@ -124,6 +182,7 @@ function App() {
           </div>
         </div>
       )}
+      <canvas ref={canvasRef} className="hidden" />
     </div>
   );
 }
