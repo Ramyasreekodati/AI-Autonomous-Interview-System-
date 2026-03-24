@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
-import { Camera, Video, Mic, CheckCircle, AlertCircle, Play } from 'lucide-react';
+import { Camera, Video, Mic, CheckCircle, AlertCircle, Play, LayoutDashboard, UserCheck } from 'lucide-react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import Admin from './Admin';
 
 const API_BASE = "http://localhost:8000";
 
@@ -102,7 +104,47 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-900 text-white font-sans p-8">
+    <Router>
+      <div className="min-h-screen bg-neutral-900 text-white font-sans">
+        <nav className="bg-neutral-800/50 backdrop-blur-md border-b border-white/5 py-4 px-8 flex justify-between items-center sticky top-0 z-50">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center font-black text-xs">AI</div>
+            <span className="font-bold tracking-tight">InterviewSystem</span>
+          </div>
+          <div className="flex gap-6">
+            <Link to="/" className="flex items-center gap-2 hover:text-indigo-400 transition font-medium text-sm">
+              <UserCheck size={16} /> Candidate Portal
+            </Link>
+            <Link to="/admin" className="flex items-center gap-2 hover:text-indigo-400 transition font-medium text-sm">
+              <LayoutDashboard size={16} /> Admin Panel
+            </Link>
+          </div>
+        </nav>
+
+        <Routes>
+          <Route path="/" element={<CandidateView 
+            session={session} setSession={setSession} 
+            name={name} setName={setName}
+            questions={questions} setQuestions={setQuestions}
+            currentIdx={currentIdx} setCurrentIdx={setCurrentIdx}
+            analysis={analysis} setAnalysis={setAnalysis}
+            videoRef={videoRef} canvasRef={canvasRef}
+            startSession={startSession} nextQuestion={nextQuestion}
+          />} />
+          <Route path="/admin" element={<Admin />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+}
+
+function CandidateView({ 
+  session, setSession, name, setName, questions, setQuestions, 
+  currentIdx, setCurrentIdx, analysis, setAnalysis, 
+  videoRef, canvasRef, startSession, nextQuestion 
+}) {
+  return (
+    <div className="p-8">
       {!session ? (
         <div className="max-w-md mx-auto mt-20 text-center">
           <h1 className="text-4xl font-extrabold mb-6 text-indigo-400">AI Interview Portal</h1>

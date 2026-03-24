@@ -1,7 +1,9 @@
 import random
 from ai_modules.cv.face_mesh import FaceAnalyzer
+from ai_modules.nlp.relevance_scorer import RelevanceScorer
 
 analyzer = FaceAnalyzer()
+scorer = RelevanceScorer()
 
 def analyze_emotion(frame_bytes):
     analysis = analyzer.analyze_frame(frame_bytes)
@@ -13,8 +15,11 @@ def analyze_emotion(frame_bytes):
     return random.choice(emotions)
 
 def calculate_relevance(text):
-    # This would use a transformer model
-    return round(random.uniform(0.7, 1.0), 2)
+    # This now uses a real transformer-based similarity
+    # In a full app, we would compare text against expected model answers
+    reference = "I understand the difference between supervised and unsupervised learning."
+    relevance = scorer.calculate_relevance(text, reference)
+    return relevance
 
 def generate_session_summary(session_data):
     # This would generate the logic for the final scoring

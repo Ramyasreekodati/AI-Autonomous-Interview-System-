@@ -13,3 +13,4 @@ numpy
 pandas
 websockets
 fpdf2
+sentence-transformers
