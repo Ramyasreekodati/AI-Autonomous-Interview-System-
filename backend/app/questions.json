@@ -1,0 +1,7 @@
+[
+    {"id": 1, "text": "Tell me about yourself.", "category": "Personal"},
+    {"id": 2, "text": "What are your greatest strengths?", "category": "Personal"},
+    {"id": 3, "text": "What is the difference between supervised and unsupervised learning?", "category": "Technical"},
+    {"id": 4, "text": "Explain the concept of backpropagation in neural networks.", "category": "Technical"},
+    {"id": 5, "text": "Why do you want to join our AI Internship program?", "category": "Personal"}
+]

@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+pydantic
+sqlalchemy
+python-multipart
+fpdf2
+pypdf
+opencv-python-headless
+mediapipe
+transformers
+torch
+numpy
+pandas
