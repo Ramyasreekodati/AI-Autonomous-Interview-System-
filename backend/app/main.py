@@ -1,22 +1,30 @@
-from fastapi import FastAPI, UploadFile, File, Form, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, UploadFile, File, Form, WebSocket, WebSocketDisconnect, Depends
 from fastapi.middleware.cors import CORSMiddleware
 import time
 import json
 import random
+import os
+import sys
 from typing import List
-from app.services import ai_service
-
-from .database import engine, get_db
-from . import models
 from sqlalchemy.orm import Session
-from fastapi import Depends
+
+# Internal imports
+from .database import engine, get_db, SessionLocal
+from . import models
+from app.services import ai_service
 
 # Create tables
 models.Base.metadata.create_all(bind=engine)
 
+from fastapi.staticfiles import StaticFiles
+
 app = FastAPI(title="AI Interview System")
 
-# Enabling CORS
+# Serve reports as static files
+os.makedirs("reports", exist_ok=True)
+app.mount("/reports", StaticFiles(directory="reports"), name="reports")
+
+# Enabling CORS for frontend communication
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -25,15 +33,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-import json
-
 @app.get("/")
 def read_root():
     return {"message": "Welcome to AI Interview System Backend"}
 
 @app.get("/questions")
 def get_questions():
-    with open("c:/Users/Lenovo/Desktop/AI interview/ai-interview-system/backend/app/questions.json", "r") as f:
+    questions_path = os.path.join(os.path.dirname(__file__), "questions.json")
+    with open(questions_path, "r") as f:
         return json.load(f)
 
 @app.post("/session/start")
@@ -52,8 +59,6 @@ def start_session(candidate_name: str = Form(...), db: Session = Depends(get_db)
         "status": "started",
         "timestamp": time.time()
     }
-
-from app.services import ai_service
 
 @app.post("/analyze/frame")
 async def analyze_frame(session_id: str = Form(...), file: UploadFile = File(...)):
@@ -94,16 +99,12 @@ async def analyze_speech(
 @app.websocket("/ws/analyze/{session_id}")
 async def websocket_endpoint(websocket: WebSocket, session_id: str):
     await websocket.accept()
-    # Getting a DB session for the long-lived websocket
     db = SessionLocal()
     try:
         while True:
-            # Receive binary frame from client
             data = await websocket.receive_bytes()
-            # Analyze frame logic (real-time emotion/focus)
             emotion = ai_service.analyze_emotion(data)
             
-            # Log alert if focus is lost
             if emotion == "Not Focused":
                 alert = models.AlertLog(
                     session_id=session_id,
@@ -126,11 +127,9 @@ async def websocket_endpoint(websocket: WebSocket, session_id: str):
         db.close()
 
 from fpdf import FPDF
-import os
 
 @app.get("/report/{session_id}")
 def generate_report(session_id: str, db: Session = Depends(get_db)):
-    # Fetch data from DB
     session_data = db.query(models.CandidateSession).filter(models.CandidateSession.id == session_id).first()
     if not session_data:
         return {"error": "Session not found"}
@@ -138,7 +137,6 @@ def generate_report(session_id: str, db: Session = Depends(get_db)):
     answers = db.query(models.CandidateAnswer).filter(models.CandidateAnswer.session_id == session_id).all()
     alerts = db.query(models.AlertLog).filter(models.AlertLog.session_id == session_id).all()
 
-    # Generate PDF
     pdf = FPDF()
     pdf.add_page()
     pdf.set_font("Arial", 'B', 16)
@@ -164,15 +162,17 @@ def generate_report(session_id: str, db: Session = Depends(get_db)):
     for alert in alerts:
         pdf.cell(200, 10, txt=f"- [{alert.severity}] {alert.type}: {alert.message}", ln=True)
 
-    report_path = f"c:/Users/Lenovo/Desktop/AI interview/AI-Autonomous-Interview-System-/backend/reports/report_{session_id}.pdf"
+    # Use a relative path for reports
+    os.makedirs("reports", exist_ok=True)
+    report_filename = f"report_{session_id}.pdf"
+    report_path = os.path.join("reports", report_filename)
     pdf.output(report_path)
     
-    # Update DB with report URL
-    session_data.final_report_url = report_path
+    session_data.final_report_url = f"/reports/{report_filename}"
     session_data.status = "completed"
     db.commit()
 
-    return {"report_url": f"/reports/report_{session_id}.pdf", "status": "completed"}
+    return {"report_url": f"/reports/{report_filename}", "status": "completed"}
 
 @app.get("/admin/sessions")
 def get_sessions(db: Session = Depends(get_db)):

@@ -92,12 +92,13 @@ function App() {
     }
   };
 
+  const [reportUrl, setReportUrl] = useState(null);
+
   const finishInterview = async () => {
     try {
       const res = await axios.get(`${API_BASE}/report/${session.session_id}`);
-      alert("Interview Complete! Your report is being generated.");
-      window.open(`${API_BASE}${res.data.report_url}`, '_blank');
-      setSession(null);
+      setReportUrl(res.data.report_url);
+      alert("Interview Complete! Your report is ready.");
     } catch (err) {
       console.error("Failed to finish interview", err);
     }
@@ -210,12 +211,22 @@ function CandidateView({
                <p className="text-2xl font-semibold mb-8 h-24 overflow-auto">
                  {questions[currentIdx]?.text}
                </p>
-               <button
-                 onClick={nextQuestion}
-                 className="w-full bg-white text-black hover:bg-gray-200 p-4 rounded-xl font-bold transition flex items-center justify-center gap-2"
-               >
-                 Submit Answer and Continue
-               </button>
+               {reportUrl ? (
+                 <a
+                   href={`${API_BASE}${reportUrl}`}
+                   target="_blank"
+                   className="w-full bg-green-600 hover:bg-green-500 p-4 rounded-xl font-bold transition flex items-center justify-center gap-2 mt-4"
+                 >
+                   <FileText size={20} /> Download Final Report
+                 </a>
+               ) : (
+                 <button
+                   onClick={nextQuestion}
+                   className="w-full bg-white text-black hover:bg-gray-200 p-4 rounded-xl font-bold transition flex items-center justify-center gap-2"
+                 >
+                   Submit Answer and Continue
+                 </button>
+               )}
             </div>
             <div className="bg-neutral-800 p-6 rounded-3xl border border-white/10">
                <p className="text-gray-400 text-xs mb-2">CANDIDATE: {session.candidate_name}</p>

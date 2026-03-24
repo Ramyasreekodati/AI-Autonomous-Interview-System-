@@ -1,7 +1,11 @@
 [
     {"id": 1, "text": "Tell me about yourself.", "category": "Personal"},
-    {"id": 2, "text": "What are your greatest strengths?", "category": "Personal"},
-    {"id": 3, "text": "What is the difference between supervised and unsupervised learning?", "category": "Technical"},
-    {"id": 4, "text": "Explain the concept of backpropagation in neural networks.", "category": "Technical"},
-    {"id": 5, "text": "Why do you want to join our AI Internship program?", "category": "Personal"}
+    {"id": 2, "text": "What are your greatest technical strengths?", "category": "Personal"},
+    {"id": 3, "text": "What is the difference between supervised and unsupervised learning?", "category": "AI/ML"},
+    {"id": 4, "text": "Explain the concept of backpropagation in neural networks.", "category": "Deep Learning"},
+    {"id": 5, "text": "How do you handle missing or noisy data in a dataset?", "category": "Data Science"},
+    {"id": 6, "text": "What is overfitting, and how can it be prevented?", "category": "AI/ML"},
+    {"id": 7, "text": "Explain the architecture of a Transformer model.", "category": "NLP"},
+    {"id": 8, "text": "How do you manage deadlines in a collaborative team project?", "category": "Soft Skills"},
+    {"id": 9, "text": "Why do you want to join this AI Autonomous Interview System project?", "category": "Personal"}
 ]
