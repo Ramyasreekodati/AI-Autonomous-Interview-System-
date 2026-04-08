@@ -1,0 +1,113 @@
+﻿=== 5 week implementation plan.pdf ===
+
+--- Page 1 ---
+
+--- Page 2 ---
+
+--- Page 3 ---
+
+--- Page 4 ---
+
+--- Page 5 ---
+
+
+
+=== Document 4.pdf ===
+
+--- Page 1 ---
+Pre-Requisites  
+ 
+1. Technical Knowledge Requirements  
+To develop and understand the system, the following foundational knowledge is required:  
+ò Programming Languages:  
+  û Python (primary language for AI and backend development)  
+  û JavaScript (for frontend development)  
+ò Artificial Intelligence & Machine Learning:  
+  û Basics of supervised learning  
+  û Understanding of deep learning concepts (CNN, NLP)  
+  û Model training and inference  
+ò Computer Vision:  
+  û Image processing fundamentals  
+  û Face detection and object detection techniques  
+ò Natural Language Processing (NLP):  
+  û Text processing  
+  û Conversational AI basics  
+ò Web Development:  
+  û REST API concepts  
+  û Frontend -backend communication  
+ 
+2. Software Requirements  
+The following software tools and platforms are required for development:  
+Software  Purpose  
+--- Page 2 ---
+Python (3.8 or above)  Backend and AI 
+development  
+Node.js  Frontend and API handling  
+Visual Studio Code / 
+PyCharm  Code development  
+Git & GitHub  Version control  
+Postman  API testing  
+Docker (optional)  Containerization  
+ 
+3. Libraries & Frameworks  
+The system uses the following major libraries and frameworks:  
+Category  Tools  
+Backend Framework  FastAPI / Flask  
+AI/ML Libraries  TensorFlow, PyTorch, Scikit -
+learn  
+Computer Vision  OpenCV  
+NLP  Transformers (Hugging Face)  
+Frontend  React.js  
+Database  PostgreSQL / MongoDB  
+Real -Time 
+Communication  WebSockets / WebRTC  
+ 
+4. Hardware Requirements  
+Minimum hardware specifications for development and testing:  
+Component  Requirement  
+Processor  Intel i5 / Ryzen 5 or higher  
+RAM  Minimum 8 GB (16 GB 
+recommended)  
+Storage  10 GB free space  
+Camera  Webcam (for real -time monitoring)  
+--- Page 3 ---
+GPU (Optional)  Recommended for faster AI 
+processing  
+ 
+5. System Requirements  
+Requirement  Details  
+Operating System  Windows / Linux / macOS  
+Internet 
+Connection  Required for APIs and model 
+usage  
+Browser  Chrome / Edge (latest version)  
+ 
+6. Development Tools & Setup  
+ò Code editor with extensions (Python, JS support)  
+ ò Virtual environment setup (venv/conda)  
+ ò Database setup (local or cloud)  
+ ò API testing tools (Postman)  
+ ò Version control system (Git)  
+ 
+7. Additional Requirements  
+ò Basic understanding of system architecture and APIs  
+ ò Knowledge of JSON data handling  
+ ò Familiarity with debugging and testing techniques  
+ 
+
+
+=== Task Distribution.xlsx ===
+                            Name                Role                 Working Domain                                              Phase 1 (Detailed Task)                                               Phase 2 (Detailed Task)                                              Phase 3 (Detailed Task)                                        Phase 4 (Detailed Task)                                                                      Phase 5
+0            Ishan Pankaj Jadhav  Team Lead / AI Dev  Architecture + AI Integration  Design complete system architecture and define APIs for all modules  Supervise integration of CV models and ensure pipeline compatibility  Lead integration of all modules and implement decision engine logic  Handle deployment setup using Docker and optimize system flow  Implement model versioning and design system scalability for multiple users
+1              Kodati Ramya Sree              Intern               Data + Analytics      Design and implement database schema for storing interview data         Store and analyze alert logs for suspicious activity tracking              Support data fusion by combining multiple model outputs     Build analytics dashboards using Power BI or similar tools                Develop PDF report generation and advanced analytics insights
+2                  Shambhavi M K              Intern            Backend Development    Develop backend APIs for session handling and response submission       Implement WebSocket communication for real-time video streaming                  Integrate backend APIs with AI modules and frontend         Perform testing, debugging, and ensure API reliability                Implement authentication system and role-based access control
+3               Messiah Prince N              Intern                         AI/NLP            Integrate basic NLP model for question-answer interaction                         Assist in emotion detection model integration             Develop scoring logic for evaluating candidate responses                Tune models for better accuracy and performance                         Integrate speech-to-text system for audio processing
+4              Ganga Siva Prasad              Intern           Data Structures + CV          Implement data structures for storing responses efficiently                         Assist in face detection model implementation              Develop behavior tracking logic for suspicious activity                      Optimize algorithms for faster processing                             Implement eye tracking and gaze detection system
+5                    Aditya Gour              Intern               API + Automation                                 Integrate frontend with backend APIs                       Develop alert APIs for triggering notifications                          Connect all modules using API communication                        Automate workflows using tools like n8n                           Implement session recovery and workflow automation
+6                    Akshat Rana           AI/ML Dev                Full Stack + CV                         Develop frontend UI and assist backend setup                           Implement object detection using YOLO model                        Handle full system integration across modules                        Optimize performance and reduce latency                         Implement multi-user handling and performance tuning
+7                    Aditi Yadav        AI/ML Intern            Full Stack + DevOps                                   Develop candidate-side frontend UI                          Assist in integrating computer vision models                          Develop admin panel backend functionalities                     Support DevOps tasks and environment setup                             Handle cloud deployment and CI/CD pipeline setup
+8                  Yash Wankhede              AI Dev           Data + Visualization                         Perform data preprocessing for system inputs                              Analyze alert data and generate insights                             Develop visualization for scoring system                         Build dashboards for analytics display                           Implement bias analysis and advanced data insights
+9                   Ishan Dudhat           AI Intern                 CV + Streaming                       Implement camera integration for video capture                                     Develop image processing pipeline                           Integrate real-time video streaming system                           Optimize system for smooth streaming                                Implement offline handling and data buffering
+10  Adityaraj Vikramsingh Jadhav           AI Intern                     AI Support                             Assist in NLP flow and response handling                                  Support object detection model tasks                                 Assist in integration of all modules                                  Perform testing and debugging                                    Develop smart alert prioritization system
+11             Kaveri Ravi Desai        AI/ML Intern                AI + Evaluation                            Assist NLP model and database integration                                 Support emotion detection model tasks                               Develop evaluation metrics for scoring                            Generate detailed candidate reports                                Implement voice analysis for stress detection
+12                 Radhika Gupta        AI/ML Intern           Data + Documentation                            Handle data processing and Excel tracking                                    Track alert data and maintain logs                                          Assist in report generation                                   Prepare system documentation                                  Develop user guides and final documentation

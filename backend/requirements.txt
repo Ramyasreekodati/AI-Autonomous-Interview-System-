@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+sqlalchemy
+pydantic
+python-multipart
+python-jose[cryptography]
+passlib[bcrypt]
+psycopg2-binary
+websockets
+mediapipe
+opencv-python
+numpy
+transformers
+torch
+whisper
+fpdf2
